@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "QTZPNG.h"
+#import "QTPNG.h"
 #import "spng.h"
 
 int main(int argc, const char * argv[]) {
