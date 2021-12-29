@@ -7,9 +7,10 @@ int main(int argc, const char * argv[]) {
         int w = 1920;
         int h = 1080;
         int bpp = 4;
+        const int PNG_HEADER_SIZE = 58;
         std::vector<uint8_t> fpng_file_buf;
         unsigned char *src = new unsigned char[w*h*4];
-        unsigned char *dst = new unsigned char[4096+(w+1)*h*4];
+        unsigned char *dst = new unsigned char[PNG_HEADER_SIZE+(w+1)*h*4];
         QTPNGRecorder *recorder = new QTPNGRecorder(w,h,30,8*4,@"./test.mov");
         for(int n=0; n<30; n++) {
             unsigned int *p = (unsigned int *)src;
