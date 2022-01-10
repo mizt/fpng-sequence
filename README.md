@@ -1,4 +1,4 @@
-### Export to `.mov` (PNG Sequence).
+### Export to `.mov` (PNG Sequence)
 
 Encoder is dependency on [fpng](https://github.com/richgel999/fpng) (Dec 28, 2021).
 
@@ -78,7 +78,7 @@ void apply_filter(int tid, uint8_t *pDst, uint8_t *pSrc, int w, int begin, int e
 }
 ```
 
-### Import from `.mov` (PNG Sequence).
+### Import from `.mov` (PNG Sequence)
 
 Decoder is dependency on [spng](https://github.com/randy408/libspng) (v0.7.1).
 
@@ -91,3 +91,37 @@ cp ./build/Release/libspng.a ./libspng.xcframework/macos-arm64/libspng.a
 cp ./build/Release-iphoneos/libspng.a ./libspng.xcframework/ios-arm64/libspng.a
 cp ./build/Release-iphonesimulator/libspng.a ./libspng.xcframework/ios-arm64-simulator/libspng.a
 ```
+
+### Trim `.mov` (PNG Sequence)
+
+```
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        
+        int begin = 100;
+        int end = begin+30;
+        
+        NSString *path = @"./2022_01_09_21_36_56_487.mov";
+        QTPNGParser *png = new QTPNGParser(path);
+        if(png->length()>0) {
+            QTPNGRecorder *recorder = new QTPNGRecorder(png->width(),png->height(),30,8*4,@"./trim.mov");            
+            if(begin<end&&end<png->length()) {
+                for(int k=begin; k<end; k++) {
+                    NSData *data = png->get(k);
+                    recorder->add((unsigned char *)data.bytes,data.length);
+                }
+                recorder->save();
+            }
+            else {
+                NSLog(@"Error: %d,%d",begin,end);
+            }
+        }
+        delete png;
+    }
+}
+```
+
+
+
+
+
